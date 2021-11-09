@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lobozoo/screens/Eventos.dart';
 import 'package:lobozoo/screens/pag_inicio.dart';
 
 class Home extends StatefulWidget {
@@ -12,7 +13,7 @@ class _HomeState extends State {
   @override
   int _currentIndex = 2;
   final List _children = [
-    PagInicio(Colors.white),
+    Eventos(),
     PagInicio(Colors.deepOrange),
     PagInicio(Colors.green),
     PagInicio(Colors.yellow),
@@ -21,9 +22,9 @@ class _HomeState extends State {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text("Lobozoo"),
-      ),
+      ), */
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
