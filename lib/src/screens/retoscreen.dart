@@ -64,3 +64,31 @@ class RetoScreen extends StatelessWidget {
     );
   }
 }
+/*
+IconButton(
+icon:const ImageIcon( AssetImage("assets/leon.jpg"),size: 300,),
+onPressed: (){
+showModalBottomSheet<void>(
+context: context,
+builder:(BuildContext context){
+return Container(
+height: 200,
+color:Colors.black,
+child:Center(
+child: Column(
+mainAxisAlignment: MainAxisAlignment.center,
+mainAxisSize: MainAxisSize.min,
+children: <Widget>[
+const Text("Modal BottomSheet",style: TextStyle(color: Colors.white),),
+ElevatedButton(child:const Text('Close BottomSheet'),
+onPressed: ()=>Navigator.pop(context),)
+],
+),
+)
+);
+}
+);
+},
+),
+
+ */
