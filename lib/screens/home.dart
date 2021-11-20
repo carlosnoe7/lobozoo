@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lobozoo/screens/Eventos.dart';
+import 'package:lobozoo/screens/Principal.dart';
 import 'package:lobozoo/screens/pag_inicio.dart';
 
 class Home extends StatefulWidget {
@@ -15,7 +16,7 @@ class _HomeState extends State {
   final List _children = [
     Eventos(),
     PagInicio(Colors.deepOrange),
-    PagInicio(Colors.green),
+    Principal(),
     PagInicio(Colors.yellow),
     PagInicio(Colors.black)
   ];
