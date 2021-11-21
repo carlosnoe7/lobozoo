@@ -32,7 +32,7 @@ class _HomeState extends State {
         currentIndex: _currentIndex,
         selectedItemColor: Colors.green,
         iconSize: 40,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.event),
             label: 'Eventos',
