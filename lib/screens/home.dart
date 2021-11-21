@@ -3,6 +3,7 @@ import 'package:lobozoo/screens/Eventos.dart';
 import 'package:lobozoo/screens/Principal.dart';
 import 'package:lobozoo/screens/pag_inicio.dart';
 import 'package:lobozoo/src/screens/mapascreen.dart';
+import 'package:lobozoo/src/screens/retoscreen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ class _HomeState extends State {
     Eventos(),
     MapaScreen(),
     Principal(),
-    PagInicio(Colors.yellow),
+    RetoScreen(),
     PagInicio(Colors.black)
   ];
 
