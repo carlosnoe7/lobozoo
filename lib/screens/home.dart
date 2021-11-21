@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lobozoo/screens/Eventos.dart';
 import 'package:lobozoo/screens/Principal.dart';
 import 'package:lobozoo/screens/pag_inicio.dart';
+import 'package:lobozoo/src/screens/mapascreen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _HomeState extends State {
   int _currentIndex = 2;
   final List _children = [
     Eventos(),
-    PagInicio(Colors.deepOrange),
+    MapaScreen(),
     Principal(),
     PagInicio(Colors.yellow),
     PagInicio(Colors.black)
