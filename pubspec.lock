@@ -69,6 +69,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+<<<<<<< HEAD
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -76,6 +77,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
+=======
+  flutter_staggered_grid_view:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_grid_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.1"
+>>>>>>> noe
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -172,4 +182,8 @@ packages:
     version: "2.1.0"
 sdks:
   dart: ">=2.12.0 <3.0.0"
+
   flutter: ">=1.26.0-17.6.pre"
+
+
+

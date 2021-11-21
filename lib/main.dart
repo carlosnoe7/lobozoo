@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:lobozoo/routes/routes.dart';
 // import 'package:lobozoo/screens/login_page.dart';
 // import 'package:lobozoo/screens/home.dart';
+import 'package:lobozoo/src/screens/mapascreen.dart';
+
 
 void main() => runApp(Lobozoo());
 
@@ -16,10 +18,13 @@ class Lobozoo extends StatelessWidget {
       statusBarColor: Colors.black,
     ));
     return MaterialApp(
+
       title: 'Lobozoo',
       // home: Home(),
       initialRoute: 'login',
       routes: appRoutes,
+
+
     );
   }
 }
