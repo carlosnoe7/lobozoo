@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1071650776602",
+    "project_id": "lobozoo-c7d92",
+    "storage_bucket": "lobozoo-c7d92.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071650776602:android:8b7c7a092e603363a953a3",
+        "android_client_info": {
+          "package_name": "com.example.lobozoo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1071650776602-sg99p2n7fduckq5iu7ol55unqo0iubdk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lobozoo",
+            "certificate_hash": "0e9ae7e226b6d67ebe12c525f5ee718db25d1955"
+          }
+        },
+        {
+          "client_id": "1071650776602-msirq791i4cd7aphrt52iftklcma7nan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5W90mAEt5MHXFYRns9RNQ28B_O-J58lk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1071650776602-msirq791i4cd7aphrt52iftklcma7nan.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
