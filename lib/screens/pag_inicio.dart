@@ -76,19 +76,22 @@ class __FormState extends State<_Form> {
           ),
           DateTimeField(
             format: format,
+            style:const TextStyle(color: Colors.white),
             decoration: const InputDecoration(
               labelText: 'Fecha de nacimiento',
               labelStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.normal),
               filled: true,
               fillColor: Colors.black,
-              // prefixIcon: Icon(Icons.calendar_today, color: Colors.white),
-              // hintStyle: TextStyle(color: Colors.white),
-              counterText: 'yyyy-mm-dd',
-              helperStyle: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),
+              prefixIcon: Icon(Icons.calendar_today, color: Colors.white),
+              counterText: 'aaaa/mm/dd',
+              counterStyle: TextStyle(color: Colors.black,fontSize: 15, fontWeight: FontWeight.normal),
+              helperText: 'Formato de Fecha',
+              helperStyle: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),
             ),
             onShowPicker: (context, currentValue) async {
               final date = await showDatePicker(
                 locale : const Locale("es","ES"),
+                initialEntryMode: DatePickerEntryMode.input,
                 context: context,
                 firstDate: DateTime(1900),
                 lastDate: DateTime(2100),
@@ -96,7 +99,6 @@ class __FormState extends State<_Form> {
                 cancelText: 'Cancelar',
                 initialDate: currentValue ?? DateTime.now(),
                 helpText: 'Selecciona tu fecha de nacimiento',
-                initialEntryMode: DatePickerEntryMode.calendarOnly,
               );
                 if (date != null) {
                   return date;

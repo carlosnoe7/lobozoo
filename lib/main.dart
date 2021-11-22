@@ -24,8 +24,6 @@ class Lobozoo extends StatelessWidget {
         GlobalMaterialLocalizations.delegate
       ],
       supportedLocales: [
-        const Locale('en'),
-        const Locale('fr'),
         const Locale('es'),
       ],
       title: 'Lobozoo',
