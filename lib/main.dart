@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lobozoo/src/screens/mapascreen.dart';
+
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:lobozoo/routes/routes.dart';
 // import 'package:lobozoo/screens/login_page.dart';
 // import 'package:lobozoo/screens/home.dart';
-import 'package:lobozoo/src/screens/mapascreen.dart';
 
 
 void main() => runApp(Lobozoo());
@@ -18,7 +20,12 @@ class Lobozoo extends StatelessWidget {
       statusBarColor: Colors.black,
     ));
     return MaterialApp(
-
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate
+      ],
+      supportedLocales: [
+        const Locale('es'),
+      ],
       title: 'Lobozoo',
       // home: Home(),
       initialRoute: 'login',
