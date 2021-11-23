@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:lobozoo/src/widgets/buttonimg.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 //List<String>  animals = ['leon','mono','jirafa','jirafa']..length = 20;
 
 
@@ -17,6 +17,14 @@ class MapaScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseFirestore.instance
+        .collection('eventos')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        print(doc["descripcion"]);
+      });
+    });
     return Scaffold(
      body: Stack(
        children: <Widget>[
