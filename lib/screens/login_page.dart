@@ -28,6 +28,7 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             // ? para tener un codigo mas limpio ponemos un metodo que nos haga referencia a los metodos
             children: <Widget>[
+              const Image(image: AssetImage("assets/inicio_zoo.jpg")),
               _Form(),
               SizedBox(
                   width: double.infinity,

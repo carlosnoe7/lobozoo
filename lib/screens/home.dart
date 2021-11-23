@@ -20,7 +20,7 @@ class _HomeState extends State {
     MapaScreen(),
     Principal(),
     RetoScreen(),
-    PagInicio(Colors.black)
+    PagInicio()
   ];
 
   Widget build(BuildContext context) {
