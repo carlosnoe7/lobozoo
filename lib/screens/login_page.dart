@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:lobozoo/routes/routes.dart';
-
 import 'package:lobozoo/widgets/Custom_input.dart';
 import 'package:lobozoo/widgets/boton.dart';
 
@@ -62,10 +63,7 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
-    // ! quitamos ek build porque aqui ya se podra redibujar si esta propiedad
-    // ! para poder obtener los servicios tenemos que extablecerlos en el main
-    //final authService   = Provider.of<AuthService>( context );
-
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
     return Container(
       margin: const EdgeInsets.only(top: 40),
       // ? que use lo mismo en toda la parte horizontal de unos 50
@@ -95,25 +93,17 @@ class __FormState extends State<_Form> {
               onPressed: () async {
                 // ? quitamos el foco de donde sea que este por ahora y ocultamos el teclado
                 FocusScope.of(context).unfocus();
-                print(emailCtrl.text);
-                print(passCtrl.text);
-                // ? podemos poner aqui nuestro servicio como es una funcion o tambien en
-                // ? la parte de arriba abajo del build
-                // // ? mandamos a llamar el servicio
-                // // ? of(context) para hacer la referencia al arbol de widgets
-                // // ! ponemos el listen en false porquesino entonces intentaria redibujar nuestro widget
-                // final authService = Provider.of<AuthService>(context, listen: false);
-                // ? Aqui ya estamos mandando la info de el servicios
-                //? el trim es para asegurarnos que no van espacios en blanco
-//              final loginOk = await authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
-
-                // if ( loginOk ) {
-                //   // ? Navegar a la pantalla
-                //   socketService.connect();
-                //   // ! Se le pone pushreplace... para que ya no pueda regresar a esta pantalla
-                //     // ! pues ya esta logeado
-                //   // ? conectar a nuestro socket server
-                Navigator.pushReplacementNamed(context, 'home');
+                users.doc(emailCtrl.text).get().then((value) {
+                  if (value.exists) {
+                    if (value.get('password') == passCtrl.text) {
+                      Navigator.pushNamed(context, 'home');
+                    } else {
+                      print('contraseña incorrecta o no existe el usuario');
+                    }
+                  } else {
+                    print('contraseña incorrecta o no existe el usuario');
+                  }
+                });
                 // } else{
                 //   // ? mostrar alerta
                 //    mostrarAlerta(

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/cupertino.dart';
 
 import 'package:lobozoo/widgets/Custom_input.dart';
 import 'package:lobozoo/widgets/boton.dart';
+
 class PagInicio extends StatelessWidget {
   const PagInicio({Key? key}) : super(key: key);
 
@@ -49,12 +52,10 @@ class __FormState extends State<_Form> {
   final emailCtrl = TextEditingController();
   final nameCtrl = TextEditingController();
   final format = DateFormat("yyyy-MM-dd");
-
+  dynamic _date;
   @override
   Widget build(BuildContext context) {
-    // ! quitamos ek build porque aqui ya se podra redibujar si esta propiedad
-    // ! para poder obtener los servicios tenemos que extablecerlos en el main
-    //final authService   = Provider.of<AuthService>( context );
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     return Container(
       margin: const EdgeInsets.only(top: 40),
@@ -76,21 +77,30 @@ class __FormState extends State<_Form> {
           ),
           DateTimeField(
             format: format,
-            style:const TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             decoration: const InputDecoration(
               labelText: 'Fecha de nacimiento',
-              labelStyle: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.normal),
+              labelStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal),
               filled: true,
               fillColor: Colors.black,
               prefixIcon: Icon(Icons.calendar_today, color: Colors.white),
               counterText: 'aaaa/mm/dd',
-              counterStyle: TextStyle(color: Colors.black,fontSize: 15, fontWeight: FontWeight.normal),
+              counterStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.normal),
               helperText: 'Formato de Fecha',
-              helperStyle: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),
+              helperStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal),
             ),
             onShowPicker: (context, currentValue) async {
               final date = await showDatePicker(
-                locale : const Locale("es","ES"),
+                locale: const Locale("es", "ES"),
                 initialEntryMode: DatePickerEntryMode.input,
                 context: context,
                 firstDate: DateTime(1900),
@@ -100,9 +110,10 @@ class __FormState extends State<_Form> {
                 initialDate: currentValue ?? DateTime.now(),
                 helpText: 'Selecciona tu fecha de nacimiento',
               );
-                if (date != null) {
-                  return date;
-                };
+              if (date != null) {
+                _date = date;
+                return date;
+              }
             },
           ),
           const Text(''),
@@ -112,6 +123,10 @@ class __FormState extends State<_Form> {
               borde: 15,
               isNull: false,
               onPressed: () async {
+                users.doc('daniel23.da74@gmail.com').update({
+                  'birthday': _date,
+                }).then((value) => print("update user"))
+                    .catchError((error) => print("Failed to add user: $error"));
                 // Navigator.pushReplacementNamed(context, 'home');
               })
         ],

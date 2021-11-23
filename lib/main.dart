@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lobozoo/src/screens/mapascreen.dart';
 
@@ -7,8 +8,11 @@ import 'package:lobozoo/routes/routes.dart';
 // import 'package:lobozoo/screens/login_page.dart';
 // import 'package:lobozoo/screens/home.dart';
 
-
-void main() => runApp(Lobozoo());
+Future<void>main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(Lobozoo());
+  }
 
 /// This is the main application widget.
 class Lobozoo extends StatelessWidget {

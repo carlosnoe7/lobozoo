@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:lobozoo/routes/routes.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'package:lobozoo/routes/routes.dart';
 import 'package:lobozoo/widgets/Custom_input.dart';
 import 'package:lobozoo/widgets/boton.dart';
 
@@ -56,7 +58,6 @@ class RegisterPage extends StatelessWidget {
 
 // ? metodo que contendra el formulario
 class _Form extends StatefulWidget {
-  @override
   __FormState createState() => __FormState();
 }
 
@@ -65,6 +66,8 @@ class __FormState extends State<_Form> {
   final nameCtrl = TextEditingController();
   final passCtrl1 = TextEditingController();
   final passCtrl2 = TextEditingController();
+
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +112,12 @@ class __FormState extends State<_Form> {
               isNull: false,
               onPressed: () async {
                 if (passCtrl1.text == passCtrl2.text) {
-                  // print('son iguales');
+                    users.doc(emailCtrl.text).set({
+                      'name': nameCtrl.text,
+                      'password': passCtrl2.text,
+                    }).then((value) => print("User Added"))
+                    .catchError((error) => print("Failed to add user: $error"));
+                  Navigator.pushNamed(context, 'login');
                 }
                 // Navigator.pushReplacementNamed(context, 'home');
               })
