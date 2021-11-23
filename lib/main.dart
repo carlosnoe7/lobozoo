@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lobozoo/src/screens/mapascreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -7,7 +9,11 @@ import 'package:lobozoo/routes/routes.dart';
 // import 'package:lobozoo/screens/login_page.dart';
 // import 'package:lobozoo/screens/home.dart';
 
-void main() => runApp(Lobozoo());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(Lobozoo());
+}
 
 /// This is the main application widget.
 class Lobozoo extends StatelessWidget {

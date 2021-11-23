@@ -46,14 +46,16 @@ class tarjetas extends StatelessWidget {
           width: 200,
         ),
         CarouselSlider(
-          height: 350.0,
-          enlargeCenterPage: true,
-          autoPlay: true,
-          aspectRatio: 16 / 9,
-          autoPlayCurve: Curves.fastOutSlowIn,
-          enableInfiniteScroll: true,
-          autoPlayAnimationDuration: Duration(milliseconds: 1000),
-          viewportFraction: 0.8,
+          options: CarouselOptions(
+            height: 350.0,
+            enlargeCenterPage: true,
+            autoPlay: true,
+            aspectRatio: 16 / 9,
+            autoPlayCurve: Curves.fastOutSlowIn,
+            enableInfiniteScroll: true,
+            autoPlayAnimationDuration: Duration(milliseconds: 1000),
+            viewportFraction: 0.8,
+          ),
           items: [
             Container(
               width: 200,
