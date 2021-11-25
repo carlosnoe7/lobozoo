@@ -6,28 +6,29 @@ class Principal extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Column(
-        children: [
-          Container(
-              padding: EdgeInsets.all(30.0),
-              alignment: Alignment.center,
-              child: Image(image: AssetImage("assets/inicio_zoo.jpg"))),
-          Padding(
-            padding: const EdgeInsets.all(30.0),
-            child: TextFormField(
-                decoration: InputDecoration(
-              hintText: "Realiza una busqueda",
-              //labelText: ,
-              prefixIcon: Icon(Icons.search),
-              contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-            )),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(height: 400, width: 150, child: tarjetas()),
-          ),
-        ],
-      )),
+          resizeToAvoidBottomInset: false,
+          body: ListView(
+            children: [
+              Container(
+                  padding: EdgeInsets.all(30.0),
+                  alignment: Alignment.center,
+                  child: Image(image: AssetImage("assets/inicio_zoo.jpg"))),
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: TextFormField(
+                    decoration: InputDecoration(
+                  hintText: "Realiza una busqueda",
+                  //labelText: ,
+                  prefixIcon: Icon(Icons.search),
+                  contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                )),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(height: 400, width: 150, child: tarjetas()),
+              ),
+            ],
+          )),
     );
   }
 }
@@ -59,12 +60,38 @@ class tarjetas extends StatelessWidget {
           items: [
             Container(
               width: 200,
+              margin: EdgeInsets.all(10.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: Ink.image(
-                image: cardImage,
-                fit: BoxFit.cover,
+              child: Stack(
+                children: [
+                  Ink.image(
+                    image: cardImage,
+                    fit: BoxFit.cover,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+                    child: Container(
+                        alignment: Alignment.topCenter,
+                        child: Text(
+                          "Titulo",
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ),
+                  Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Texto relleno",
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      )),
+                ],
               ),
             ),
           ],

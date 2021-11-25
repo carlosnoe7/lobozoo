@@ -8,6 +8,11 @@ class Eventos extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.green,
+          title: Text('Eventos'),
+        ),
         resizeToAvoidBottomInset: false,
         body: Center(
           child: StreamBuilder(
