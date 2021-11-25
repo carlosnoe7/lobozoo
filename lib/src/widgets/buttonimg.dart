@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 class ButtonImg extends StatelessWidget {
   final String descripcion;
   final String img;
+  final String title;
 
-
-  const ButtonImg({Key? key,this.descripcion="",this.img=""}) : super(key: key);
+  const ButtonImg({Key? key,this.descripcion="",this.img="",this.title=""}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ButtonImg extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           color: Colors.transparent,
           child: Ink.image(
-            image: AssetImage(img),
+            image: NetworkImage(img),
             fit: BoxFit.cover,
             width: 120.0,
             height: 120.0,
@@ -48,17 +48,18 @@ class ButtonImg extends StatelessWidget {
                                 Center(
                                   child:Container(
                                     margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                                    child: Text("Animal",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),),
+                                    child: Text(title,style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),),
                                   ),
                                 ),
                                 Center(
                                   child:Container(
                                     margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                                    child: Image(image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),width: 200),
+                                    child: Image(image: NetworkImage(img),width: 200),
                                   ),
                                 ),
                                 Container(
-                                  child: Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. ",style: TextStyle(color:Colors.white),),
+                                  margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                                  child: Text(descripcion,style: TextStyle(color:Colors.white),),
                                 )
                               ],
                             )
