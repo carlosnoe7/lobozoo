@@ -34,8 +34,6 @@ class Lobozoo extends StatelessWidget {
       // home: Home(),
       initialRoute: 'login',
       routes: appRoutes,
-
-
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lobozoo/routes/routes.dart';
 import 'package:lobozoo/widgets/Custom_input.dart';
 import 'package:lobozoo/widgets/boton.dart';
+import 'package:lobozoo/widgets/mostrarAlerta.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -13,9 +14,6 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      // backgroundColor: Colors.black,
-      // ),
       // ? fondo de colo de la pantalla
       backgroundColor: const Color(0xffF2F2F2),
       body: SafeArea(
@@ -24,9 +22,6 @@ class RegisterPage extends StatelessWidget {
         // ? pone una animacion como tipo rebote cuando haces el scroll hasta arriba
         physics: const BouncingScrollPhysics(),
         child: Container(
-          // ! Aqui solucionamos el problema que teniamos cuando hacemos que la
-          // ! pantalla se veia muy apretada, encerrando nuestra columna en un container
-          // ! y poniendo el heigt que cubra el 90% de la pantalla
           height: MediaQuery.of(context).size.height * 0.9,
           // ? como vamos a mostrar lo que es la imagen y los inputs necesitamos ponerlo en columnas
           child: Column(
@@ -71,9 +66,6 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
-    // ! quitamos ek build porque aqui ya se podra redibujar si esta propiedad
-    // ! para poder obtener los servicios tenemos que extablecerlos en el main
-    //final authService   = Provider.of<AuthService>( context );
 
     return Container(
       margin: const EdgeInsets.only(top: 40),
@@ -111,6 +103,44 @@ class __FormState extends State<_Form> {
               borde: 15,
               isNull: false,
               onPressed: () async {
+                if (nameCtrl.text == '' ||
+                    emailCtrl.text == '' ||
+                    passCtrl2.text == '') {
+                  mostrarAlerta(context, 'Reguistro incorrecto',
+                      'Favor de verificar los datos');
+                  return;
+                }
+
+                if (passCtrl1.text != passCtrl2.text) {
+                  mostrarAlerta(context, 'Reguistro incorrecto',
+                      'Las contraseñas no coinciden');
+                  return;
+                }
+
+                if (passCtrl1.text.length < 9) {
+                  mostrarAlerta(context, 'Reguistro incorrecto',
+                      'La contraseña debe tener al menos 9 caracteres');
+                  return;
+                }
+
+                if (passCtrl2.text.length < 9) {
+                  mostrarAlerta(context, 'Reguistro incorrecto',
+                      'La contraseña debe tener al menos 9 caracteres');
+                  return;
+                }
+
+                final userExist =
+                    await users.doc(emailCtrl.text).get().then((value) {
+                  if (value.exists) {
+                    mostrarAlerta(context, 'Reguistro incorrecto', 'Usuario ya existente');
+                    return 0;
+                  }
+                });
+
+                if (userExist == 0) {
+                  return;
+                }
+
                 if (passCtrl1.text == passCtrl2.text) {
                     users.doc(emailCtrl.text).set({
                       'name': nameCtrl.text,
@@ -119,7 +149,6 @@ class __FormState extends State<_Form> {
                     .catchError((error) => print("Failed to add user: $error"));
                   Navigator.pushNamed(context, 'login');
                 }
-                // Navigator.pushReplacementNamed(context, 'home');
               })
         ],
       ),

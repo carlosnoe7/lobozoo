@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:lobozoo/routes/routes.dart';
 import 'package:lobozoo/widgets/Custom_input.dart';
 import 'package:lobozoo/widgets/boton.dart';
+import 'package:lobozoo/widgets/mostrarAlerta.dart';
+
+ final _storage = const FlutterSecureStorage();
 
 class LoginPage extends StatelessWidget {
   @override
@@ -19,9 +23,6 @@ class LoginPage extends StatelessWidget {
         // ? pone una animacion como tipo rebote cuando haces el scroll hasta arriba
         physics: const BouncingScrollPhysics(),
         child: Container(
-          // ! Aqui solucionamos el problema que teniamos cuando hacemos que la
-          // ! pantalla se veia muy apretada, encerrando nuestra columna en un container
-          // ! y poniendo el heigt que cubra el 90% de la pantalla
           height: MediaQuery.of(context).size.height * 0.9,
           // ? como vamos a mostrar lo que es la imagen y los inputs necesitamos ponerlo en columnas
           child: Column(
@@ -86,32 +87,32 @@ class __FormState extends State<_Form> {
               color: Colors.green,
               text: 'Iniciar Session',
               borde: 15,
-              // ? aqui como ya tenemos nuestro servicio, variable y lo estamos llamando
-              //? entonces le pasamos la validacion para saber si se esta autenticando
-              //? y asi deshabilitamos el boton
               isNull: false,
               onPressed: () async {
                 // ? quitamos el foco de donde sea que este por ahora y ocultamos el teclado
                 FocusScope.of(context).unfocus();
+                if( emailCtrl.text == '' || passCtrl.text == ''){
+                  mostrarAlerta(context, 'Error', 'Por favor llene todos los campos');
+                  return;
+                }
+                if(passCtrl.text.length < 9){
+                  mostrarAlerta(context, 'Error', 'La contraseña debe tener al menos 9 caracteres');
+                  return;
+                }
                 users.doc(emailCtrl.text).get().then((value) {
                   if (value.exists) {
                     if (value.get('password') == passCtrl.text) {
-                      Navigator.pushNamed(context, 'home');
+                      _storage.write(key: 'email', value: emailCtrl.text);
+                      Navigator.pushReplacementNamed(context, 'home');
                     } else {
-                      print('contraseña incorrecta o no existe el usuario');
+                      mostrarAlerta(context,'Login incorrecto','Favor de verificar los datos');
+                      return;
                     }
                   } else {
-                    print('contraseña incorrecta o no existe el usuario');
+                    mostrarAlerta(context,'Login incorrecto','Favor de verificar los datos');
+                    return;
                   }
                 });
-                // } else{
-                //   // ? mostrar alerta
-                //    mostrarAlerta(
-                //      context,
-                //      'Login incorrecto',
-                //      'Favor de verificar los datos'
-                //   );
-                // }
               })
         ],
       ),

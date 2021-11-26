@@ -3,11 +3,44 @@ import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:flutter/cupertino.dart';
 
 import 'package:lobozoo/widgets/Custom_input.dart';
 import 'package:lobozoo/widgets/boton.dart';
+import 'package:lobozoo/widgets/mostrarAlerta.dart';
+
+final _storage = const FlutterSecureStorage();
+CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+var namecool;
+var emailcool;
+var birhdaycool;
+
+Future<dynamic> someFutureStringFunction() async {
+  final email = await _storage.read(key: 'email');
+  return users.doc(email).get().then((value) {
+    namecool = value.get('name');
+    emailcool = email;
+    if(value.get('birthday') != null){
+      birhdaycool = DateTime.parse(value.get('birthday'));
+    }else{
+      birhdaycool = DateTime.now();
+    }
+
+    dynamic datos = {
+      'name': namecool,
+      'email': emailcool,
+      'birthday': birhdaycool,
+    };
+
+    return datos;
+  }).catchError((e) {
+    return '';
+  });
+  // return await namecool;
+}
 
 class PagInicio extends StatelessWidget {
   const PagInicio({Key? key}) : super(key: key);
@@ -15,68 +48,68 @@ class PagInicio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      // backgroundColor: Colors.black,
-      // ),
-      // ? fondo de colo de la pantalla
       backgroundColor: const Color(0xffF2F2F2),
-      body: SafeArea(
-          // ? con esto podemos hacer scroll pero lo que esta adentro se junta
-          child: SingleChildScrollView(
-        // ? pone una animacion como tipo rebote cuando haces el scroll hasta arriba
-        physics: const BouncingScrollPhysics(),
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.9,
-          // ? como vamos a mostrar lo que es la imagen y los inputs necesitamos ponerlo en columnas
-          child: Column(
-            // ? ponemos que se separen de maera vertical entre cad uno de ellos
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // ? para tener un codigo mas limpio ponemos un metodo que nos haga referencia a los metodos
-            children: <Widget>[
-              _Form(),
-            ],
-          ),
-        ),
-      )),
+      body: FutureBuilder(
+        future: someFutureStringFunction(),
+        builder: (context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            return SafeArea(
+                child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.9,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    _Form(),
+                  ],
+                ),
+              ),
+            ));
+          } else {
+            return Center(
+              child: Text('Loading...'),
+            );
+          }
+        },
+      ),
     );
   }
 }
 
-// ? metodo que contendra el formulario
 class _Form extends StatefulWidget {
   @override
   __FormState createState() => __FormState();
 }
 
 class __FormState extends State<_Form> {
-  final emailCtrl = TextEditingController();
-  final nameCtrl = TextEditingController();
+  final emailCtrl = TextEditingController(text: emailcool);
+  final nameCtrl = TextEditingController(text: namecool);
   final format = DateFormat("yyyy-MM-dd");
   dynamic _date;
+
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
-
     return Container(
       margin: const EdgeInsets.only(top: 40),
-      // ? que use lo mismo en toda la parte horizontal de unos 50
       padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Column(
         children: <Widget>[
           CustomInput(
             icon: Icons.account_circle_outlined,
-            placeholder: 'Nombre',
+            placeholder: namecool != null ? namecool : 'Nombre',
             keywordType: TextInputType.name,
             textControler: nameCtrl,
           ),
           CustomInput(
             icon: Icons.mail_outline,
-            placeholder: 'Correo',
+            placeholder: emailcool != null ? emailcool : 'Correo',
             keywordType: TextInputType.emailAddress,
             textControler: emailCtrl,
           ),
           DateTimeField(
             format: format,
+            initialValue: birhdaycool,
             style: const TextStyle(color: Colors.white),
             decoration: const InputDecoration(
               labelText: 'Fecha de nacimiento',
@@ -107,12 +140,15 @@ class __FormState extends State<_Form> {
                 lastDate: DateTime(2100),
                 confirmText: 'Guardar',
                 cancelText: 'Cancelar',
-                initialDate: currentValue ?? DateTime.now(),
+                initialDate: birhdaycool != null ? birhdaycool : DateTime.now(),
                 helpText: 'Selecciona tu fecha de nacimiento',
               );
               if (date != null) {
                 _date = date;
                 return date;
+              }
+              else{
+                return birhdaycool;
               }
             },
           ),
@@ -123,11 +159,22 @@ class __FormState extends State<_Form> {
               borde: 15,
               isNull: false,
               onPressed: () async {
-                users.doc('daniel23.da74@gmail.com').update({
-                  'birthday': _date,
-                }).then((value) => print("update user"))
+                final email = await _storage.read(key: 'email');
+                if(_date == null){
+                  mostrarAlerta(context,'Error','Para actualizar debe agregar su fecha de nacimiento');
+                    return;
+                }
+                String formattedDate = DateFormat('y-M-d').format(_date);
+                users
+                    .doc(email)
+                    .update({
+                      'name': nameCtrl.text,
+                      'email': emailCtrl.text,
+                      'birthday': formattedDate,
+                    })
+                    .then((value) => print("update user"))
                     .catchError((error) => print("Failed to add user: $error"));
-                // Navigator.pushReplacementNamed(context, 'home');
+                Navigator.pushReplacementNamed(context, 'home');
               })
         ],
       ),
