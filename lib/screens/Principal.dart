@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -33,14 +34,100 @@ class Principal extends StatelessWidget {
   }
 }
 
-class tarjetas extends StatelessWidget {
-  const tarjetas({
-    Key? key,
-  }) : super(key: key);
+class Tarjeta {
+  String nombre = "";
+  String desc = "";
+  String foto = "";
 
+  Tarjeta(String nombre, String desc, String foto) {
+    this.nombre = nombre;
+    this.desc = desc;
+    this.foto = foto;
+  }
+}
+
+final List<Tarjeta> tarj = [];
+
+Future<String> guardarDatos() async {
+  FirebaseFirestore.instance
+      .collection('tarjetas')
+      .get()
+      .then((QuerySnapshot querySnapshot) {
+    querySnapshot.docs.forEach((doc) {
+      Tarjeta n1 = Tarjeta(doc["nombre"], doc["descripcion"], doc["foto"]);
+      // print(n1.foto);
+      tarj.add(n1);
+      // print(doc["nombre"] + doc["descripcion"]);
+    });
+  });
+
+  return "bien";
+}
+
+class tarjetas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    FirebaseFirestore.instance
+        .collection('tarjetas')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        Tarjeta n1 = Tarjeta(doc["nombre"], doc["descripcion"], doc["foto"]);
+        //print(n1.foto);
+        // print(doc["nombre"] + doc["descripcion"]);
+      });
+    });
+    //print(tarj[0].desc + "val");
+    return CarouselSlider(
+        items: tarj
+            .map((e) => Stack(children: [
+                  Image.network(e.foto, fit: BoxFit.cover),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 120.0, 0.0, 0.0),
+                    child: Container(
+                      color: Colors.green,
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(20.0, 10.0, 0.0, 0.0),
+                        child: Text(
+                          e.nombre,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
+                    child: Container(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
+                        child: Text(
+                          e.desc,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+                ]))
+            .toList(),
+        options: CarouselOptions(
+          enlargeCenterPage: true,
+          autoPlay: true,
+          aspectRatio: 16 / 9,
+          autoPlayCurve: Curves.fastOutSlowIn,
+          enableInfiniteScroll: true,
+          autoPlayAnimationDuration: Duration(milliseconds: 1000),
+          viewportFraction: 0.8,
+        ));
+    /* ListView(
       children: <Widget>[
         SizedBox(
           height: 30.0,
@@ -57,7 +144,11 @@ class tarjetas extends StatelessWidget {
             autoPlayAnimationDuration: Duration(milliseconds: 1000),
             viewportFraction: 0.8,
           ),
-          items: [
+          items: //nombres.map((e) => Center()),
+           [
+                  
+
+
             Container(
               width: 200,
               margin: EdgeInsets.all(10.0),
@@ -93,11 +184,11 @@ class tarjetas extends StatelessWidget {
                       )),
                 ],
               ),
-            ),
+            ), 
           ],
         ),
       ],
-    );
+    ); */
   }
 }
 

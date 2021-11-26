@@ -19,6 +19,7 @@ class Eventos extends StatelessWidget {
             stream:
                 FirebaseFirestore.instance.collection('eventos').snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData) return CircularProgressIndicator();
               return ListView(
                 children: snapshot.data!.docs.map((eventos) {
                   return Padding(
