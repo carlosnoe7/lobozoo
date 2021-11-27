@@ -62,6 +62,7 @@ class Eventos extends StatelessWidget {
                                 alignment: Alignment.center,
                                 child: Text(eventos['duracion']),
                               ),
+                              /*
                               ButtonBar(
                                 alignment: MainAxisAlignment.center,
                                 children: [
@@ -70,7 +71,7 @@ class Eventos extends StatelessWidget {
                                     onPressed: () {/* ... */},
                                   )
                                 ],
-                              )
+                              ) */
                             ],
                           )),
                     ),

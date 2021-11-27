@@ -126,11 +126,9 @@ class busq extends StatelessWidget {
                   itemCount: busq1.length,
                   itemBuilder: (BuildContext contex, int index) {
                     return ListTile(
-                      /*
                       onTap: () {
-                        _launchURL();
+                        _launchURL(busq1[index].link);
                       },
-                      */
                       title: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -169,17 +167,15 @@ class busq extends StatelessWidget {
   }
 }
 
-/*
-
-_launchURL() async {
-  const url = 'https://flutter.io';
-  if (await canLaunch(url)) {
+_launchURL(String link) async {
+  var url = link;
+  if (!await canLaunch(url)) {
     await launch(url);
   } else {
     throw 'no se abiro';
   }
 }
-*/
+
 class Tarbus {
   String nombre = "";
   String desc = "";
