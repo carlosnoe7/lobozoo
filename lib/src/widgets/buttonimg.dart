@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 class ButtonImg extends StatelessWidget {
   final String descripcion;
   final String img;
+  final String title;
 
-
-  const ButtonImg({Key? key,this.descripcion="",this.img=""}) : super(key: key);
+  const ButtonImg({Key? key,this.descripcion="",this.img="",this.title=""}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ButtonImg extends StatelessWidget {
           clipBehavior: Clip.hardEdge,
           color: Colors.transparent,
           child: Ink.image(
-            image: AssetImage(img),
+            image: NetworkImage(img),
             fit: BoxFit.cover,
             width: 120.0,
             height: 120.0,
@@ -32,20 +32,39 @@ class ButtonImg extends StatelessWidget {
                 showModalBottomSheet(context: context, builder:(_){
 
                  return DraggableScrollableSheet(
-                    initialChildSize: 0.4,
+                    initialChildSize: 0.6,
                     minChildSize: 0.2,
                    expand: false,
 
                     builder: (BuildContext context, ScrollController scrollController) {
                       return Container(
                         color: Colors.black,
-                        child: ListView.builder(
+
+                        child: ListView(
                           controller: scrollController,
-                          itemCount: 10,
-                          itemBuilder: (BuildContext context, int index) {
-                            return ListTile(title: Text(descripcion,style: TextStyle(color:Colors.white)));
-                          },
-                        ),
+                          children: [
+                            Column(
+                              children: <Widget>[
+                                Center(
+                                  child:Container(
+                                    margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                                    child: Text(title,style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),),
+                                  ),
+                                ),
+                                Center(
+                                  child:Container(
+                                    margin: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                                    child: Image(image: NetworkImage(img),width: 200),
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+                                  child: Text(descripcion,style: TextStyle(color:Colors.white),),
+                                )
+                              ],
+                            )
+                          ],
+                        )
                       );
                     },
                   );
