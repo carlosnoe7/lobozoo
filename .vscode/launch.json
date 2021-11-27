@@ -9,7 +9,7 @@
             "name": "lobozoo",
             "request": "launch",
             "type": "dart",
-            "program": "lib/widgets/main.dart"
+            "program": "lib/main.dart"
         },
         {
             "name": "lobozoo (profile mode)",
