@@ -32,7 +32,7 @@ class RetoScreen extends StatelessWidget {
               Container(
                 child:
                 LinearProgressIndicator(
-                  value: 0.2,
+                  value: 1.0,
                   backgroundColor: Colors.grey[600],
                   minHeight: 15,
                   color: Color(0xff30CC2D),

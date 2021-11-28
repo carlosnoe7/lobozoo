@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class CustomCard extends StatelessWidget {
   final String btnmessage;
@@ -64,7 +65,38 @@ class CustomCard extends StatelessWidget {
               ]
           ),
           Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-          ElevatedButton(onPressed: (){}, child:  Text(btnmessage),style: ElevatedButton.styleFrom(
+          ElevatedButton(onPressed: (){
+            if(empezado){
+              showDialog(context: context, builder: (_){
+                return AlertDialog(
+                  title: const Text('Reto Completado'),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children:  <Widget>[
+                        Center(
+                          child: Text('¡Muchas felicidades has completado el reto!'),
+                        ),
+                        Text('Canjea tu premio con el siguiente QR'),
+                        Container(
+                            width: 280, height: 280,
+                            child: QrImage(data: "qrcodedata", version: QrVersions.auto, size: 310)
+                        )
+
+                      ],
+                    ),
+                  ),
+                    actions: <Widget>[
+                  TextButton(
+                  child: const Text('Aceptar'),
+                  onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                )
+                ]);
+              });
+            }
+          }, child:  Text(btnmessage),style: ElevatedButton.styleFrom(
               primary: Color(empezado ? 0xff40CBF8 : 0xff30CC2D),
               textStyle: const TextStyle(
                   fontWeight: FontWeight.bold,
