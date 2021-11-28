@@ -31,6 +31,7 @@ class _LobozooState extends State<Lobozoo> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: [GlobalMaterialLocalizations.delegate],
       supportedLocales: [
         const Locale('es'),
