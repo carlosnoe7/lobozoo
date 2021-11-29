@@ -33,13 +33,13 @@ class Principal extends StatelessWidget {
               return ListView(
                 children: [
                   Container(
-                      padding: EdgeInsets.all(30.0),
+                      padding: EdgeInsets.all(50.0),
                       alignment: Alignment.center,
                       child: Image(image: AssetImage("assets/inicio_zoo.jpg"))),
                       busqueda(),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(height: 400, width: 150, child: tarjetas()),
+                        child: Container(height: 350, width: 150, child: tarjetas(), padding: EdgeInsets.all(10),),
                   ),
                 ],
               );
@@ -263,38 +263,48 @@ class tarjetas extends StatelessWidget {
     return CarouselSlider(
         items: tarj
             .map((e) => Stack(children: [
-                  Image.network(e.foto, fit: BoxFit.cover),
+              Padding(padding: EdgeInsets.all(20.0),child: Image.network(e.foto, fit: BoxFit.cover),),
+                
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 120.0, 0.0, 0.0),
+                    padding: const EdgeInsets.fromLTRB(0.0, 145.0, 0.0, 0.0),
                     child: Container(
                       color: Colors.green,
                       alignment: Alignment.topLeft,
                       child: Padding(
                         padding:
-                            const EdgeInsets.fromLTRB(20.0, 10.0, 0.0, 0.0),
-                        child: Text(
-                          e.nombre,
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
+                            const EdgeInsets.fromLTRB(0.0, 5.0, 0.0, 0.0),
+                        child:
+                        Container(
+                          alignment: Alignment.topCenter,
+                          child: Text(
+                            e.nombre,
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold
+                            ),
+
+                          ),
+                        )
+
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 160.0, 0.0, 0.0),
+                    padding: const EdgeInsets.fromLTRB(0.0, 180.0, 0.0, 0.0),
                     child: Container(
                       alignment: Alignment.topLeft,
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20.0, 0.0, 0.0, 0.0),
-                        child: Text(
-                          e.desc,
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
+                        padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                        child:Center(
+                          child: Text(
+                            e.desc,
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
                       ),
                     ),
                   ),
